@@ -9,11 +9,11 @@ def compute_nb_errors(model,criterion,train_input,train_target,test_input, test_
     model = nn.train_model(model,criterion,train_input,train_target,mini_batch_size,eta,epochs,printV=printV)
 
     #Train accuracy
-
-    output = model(np.expand_dims(train_input[0],1)).reshape(1,-1)
-    for i in range(1,train_input.shape[0]):
+    output = np.zeros((len(train_input),1))
+    for i in range(train_input.shape[0]):
         tmp = model(np.expand_dims(train_input[i],1)).reshape(1,-1)
-        output = np.concatenate((output,tmp),0)
+        output[i,:] = tmp
+       
        
     
     if nb_out == 1:
@@ -24,11 +24,10 @@ def compute_nb_errors(model,criterion,train_input,train_target,test_input, test_
 
 
     #Test accuracy
-
-    output = model(np.expand_dims(test_input[0],1)).reshape(1,-1)
-    for i in range(1,test_input.shape[0]):
+    output = np.zeros((len(test_input),1))
+    for i in range(test_input.shape[0]):
         tmp = model(np.expand_dims(test_input[i],1)).reshape(1,-1)
-        output = np.concatenate((output,tmp),0)
+        output[i,:] = tmp
         
     if nb_out == 1:
         accuracy = ((((output.squeeze()>0).astype('float')*2-1)-test_target)==0).sum()/test_target.shape[0]
