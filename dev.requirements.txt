@@ -1,0 +1,8 @@
+#
+# Developer requirements file
+#
+-e .
+
+coverage
+pytest-cov
+pylint

@@ -261,4 +261,3 @@ class Sequencer(Module):
         if self.seq:
             for func in self.seq:
                 func.zero_grad()
-    
