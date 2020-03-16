@@ -14,12 +14,12 @@ class Tanh(Module):
         self.input = x
         return np.tanh(x)
 
-    def backward(self, x):
+    def backward(self, grad):
         """backward should get as input a tensor or a tuple of tensors containing the gradient of the loss with respect
         to the module’s output, accumulate the gradient wrt the parameters, and return a tensor or a tuple of tensors
         containing the gradient of the loss wrt the module’s input."""
         # return (self.input.cosh().power(-2))*x
-        return (4 * (np.exp(self.input) + np.exp(self.input * (-1))) ** (-2)) * x
+        return (4 * (np.exp(self.input) + np.exp(self.input * (-1))) ** (-2)) * grad
 
     def param(self):
         """param should  return  a  list  of  pairs,  each  composed  of  a  parameter  tensor,  and  a  gradient
@@ -38,12 +38,12 @@ class Sigmoid(Module):
         self.input = x
         return sigmoid(x)
 
-    def backward(self, x):
+    def backward(self, grad):
         """backward should get as input a tensor or a tuple of tensors containing the gradient of the loss with respect
         to the module’s output, accumulate the gradient wrt the parameters, and return a tensor or a tuple of tensors
         containing the gradient of the loss wrt the module’s input."""
         # return (self.input.cosh().power(-2))*x
-        return sigmoid(x, derivative=True)
+        return sigmoid(grad, derivative=True)
 
     def param(self):
         """param should  return  a  list  of  pairs,  each  composed  of  a  parameter  tensor,  and  a  gradient
@@ -62,12 +62,12 @@ class ReLU(Module):
         self.input = x
         return (x >= 0).astype('float') * x
 
-    def backward(self, x):
+    def backward(self, grad):
         """backward should get as input a tensor or a tuple of tensors containing the gradient of the loss with respect
         to the module’s output, accumulate the gradient wrt the parameters, and return a tensor or a tuple of tensors
         containing the gradient of the loss wrt the module’s input."""
         # 1 if >0, 0 otherwise
-        return ((self.input >= 0).astype('float')) * x
+        return ((self.input >= 0).astype('float')) * grad
 
     def param(self):
         """param should  return  a  list  of  pairs,  each  composed  of  a  parameter  tensor,  and  a  gradient

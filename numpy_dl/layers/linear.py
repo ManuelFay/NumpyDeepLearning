@@ -4,44 +4,42 @@ from numpy_dl.templates import Module
 
 class Linear(Module):
 
-    def __init__(self, sizeInput, sizeOutput):
-        self.sizeInput = sizeInput
-        self.sizeOutput = sizeOutput
+    def __init__(self, size_input, size_output):
+        self.size_input = size_input
+        self.size_output = size_output
         # eps = 1e-6
         # eps = 0.1
-        eps = 1 / (sizeInput ** .5)
-        self.w = np.random.normal(0, eps, (sizeInput, sizeOutput))
-        self.b = np.random.normal(0, eps, (sizeOutput, 1))
+        eps = 1 / (size_input ** .5)
+        self.weights = np.random.normal(0, eps, (size_input, size_output))
+        self.bias = np.random.normal(0, eps, (size_output, 1))
         self.input = None
-        self.wgrad = np.zeros((sizeInput, sizeOutput))
-        self.bgrad = np.zeros((sizeOutput, 1))
+        self.w_grad = np.zeros((size_input, size_output))
+        self.b_grad = np.zeros((size_output, 1))
 
     def forward(self, x):
         """forward should get for input, and returns, a tensor or a tuple of tensors."""
         self.input = x
-        return np.matmul(x.reshape(1, -1), self.w).reshape(-1, 1) + self.b
+        return np.matmul(x.reshape(1, -1), self.weights).reshape(-1, 1) + self.bias
 
-    def backward(self, gradwrtoutput):
+    def backward(self, grad):
         """backward should get as input a tensor or a tuple of tensors containing the gradient of the loss with respect
         to the module’s output, accumulate the gradient wrt the parameters, and return a tensor or a tuple of tensors
         containing the gradient of the loss wrt the module’s input."""
-        gradwrtinput = np.matmul(self.w, gradwrtoutput)
+        grad_input = np.matmul(self.weights, grad)
 
-        self.bgrad += gradwrtoutput
-        self.wgrad += np.matmul(gradwrtoutput, self.input.reshape(1, -1)).transpose()
-        # self.wgrad += np.matmul(gradwrtoutput.reshape(-1, 1),self.input.reshape(1,-1)).t()
-
-        return gradwrtinput
+        self.b_grad += grad
+        self.w_grad += np.matmul(grad, self.input.reshape(1, -1)).transpose()
+        return grad_input
 
     def zero_grad(self):
-        self.wgrad = np.zeros((self.sizeInput, self.sizeOutput))
-        self.bgrad = np.zeros((self.sizeOutput, 1))
+        self.w_grad = np.zeros((self.size_input, self.size_output))
+        self.b_grad = np.zeros((self.size_output, 1))
 
     def sub_grad(self, eta):
-        self.w = self.w - eta * self.wgrad
-        self.b = self.b - eta * self.bgrad
+        self.weights = self.weights - eta * self.w_grad
+        self.bias = self.bias - eta * self.b_grad
 
     def param(self):
         """param should  return  a  list  of  pairs,  each  composed  of  a  parameter  tensor,  and  a  gradient
         tensor of same size.  This list should be empty for parameter less modules (e.g.  ReLU)"""
-        return [[self.w, self.wgrad], [self.b, self.bgrad]]
+        return [[self.weights, self.w_grad], [self.bias, self.b_grad]]

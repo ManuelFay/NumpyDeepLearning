@@ -22,11 +22,11 @@ class Sequencer(Module):
     def param(self):
         params = []
         for func in self.seq:
-            for p in func.param():
-                params.append(p)
+            for param in func.param():
+                params.append(param)
         return params
 
-    def paramFunc(self):
+    def param_func(self):
         params = []
         for func in self.seq:
             if len(func.param()) > 0:

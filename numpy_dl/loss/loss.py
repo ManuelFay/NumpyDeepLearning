@@ -6,40 +6,36 @@ from numpy_dl.templates import sigmoid
 class MSELoss(Module):
 
     def __init__(self):
-        self.t = None
-        self.v = None
+        self.target = None
+        self.value = None
 
-    def __call__(self, v, t):
-        return self.forward(v, t)
+    def __call__(self, value, target):
+        return self.forward(value, target)
 
-    def forward(self, v, t):
+    def forward(self, value, target):
         # loss function
-        self.t = t
-        self.v = v
-        # print(t.shape,v.shape)
-        return ((t - v) ** 2).sum()
+        self.target = target
+        self.value = value
+        return ((target - value) ** 2).sum()
 
     def backward(self):
-        # dloss
-        # d((t1-v1)^2 + (t2-v2)^2 +(t3-v3)^2 + ...)/dvi = d/dvi (ti^2 - 2tivi + vi^2) = 2(vi-ti)
-
-        return 2 * (self.v - self.t)
+        return 2 * (self.value - self.target)
 
 
 class BCEwithSoftmaxLoss(Module):
 
     def __init__(self):
-        self.t = None
-        self.v = None
+        self.target = None
+        self.value = None
 
-    def __call__(self, v, t):
-        return self.forward(v, t)
+    def __call__(self, value, target):
+        return self.forward(value, target)
 
-    def forward(self, v, t):
-        self.v = v
-        self.t = t
+    def forward(self, value, target):
+        self.value = value
+        self.target = target
 
-        return -(t * np.log(sigmoid(self.v)) + (1 - t) * np.log(1 - sigmoid(self.v)))
+        return -(target * np.log(sigmoid(self.value)) + (1 - target) * np.log(1 - sigmoid(self.value)))
 
     def backward(self):
-        return self.v - self.t
+        return self.value - self.target

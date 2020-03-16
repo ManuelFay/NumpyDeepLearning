@@ -2,7 +2,7 @@ import numpy as np
 
 
 # TODO: make CLI
-def train_model(model, criterion, train_input, train_target, mini_batch_size, eta, epochs=25, printV=False):
+def train_model(model, criterion, train_input, train_target, mini_batch_size, eta, epochs=25, print_=False):
     for e in range(0, epochs):
         sum_loss = 0
         # We do this with mini-batches
@@ -14,10 +14,10 @@ def train_model(model, criterion, train_input, train_target, mini_batch_size, et
                 sum_loss = sum_loss + loss.item()
                 model.backward(criterion.backward())
 
-            for p in model.paramFunc():
+            for p in model.param_func():
                 p.sub_grad(eta)
 
-        if printV == True:
+        if print_:
             print("Epoch: {} \t -> Loss: {} ".format(e, sum_loss))
 
     return model
