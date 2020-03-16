@@ -1,1 +1,1 @@
-from .loss import MSELoss, BCELoss
+from .loss import MSELoss, BCEwithSoftmaxLoss

@@ -6,6 +6,11 @@ def sigmoid(x, derivative=False):
     return ret
 
 
+def stable_softmax(X):
+    exps = np.exp(X - np.max(X))
+    return exps / np.sum(exps)
+
+
 def evaluate_accuracy(x, y):
     if x.shape[1] == 1:
         return np.mean((y > 0) == (x > 0))

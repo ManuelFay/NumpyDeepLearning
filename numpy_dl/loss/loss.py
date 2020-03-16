@@ -26,7 +26,7 @@ class MSELoss(Module):
         return 2 * (self.v - self.t)
 
 
-class BCELoss(Module):
+class BCEwithSoftmaxLoss(Module):
 
     def __init__(self):
         self.t = None
@@ -36,14 +36,10 @@ class BCELoss(Module):
         return self.forward(v, t)
 
     def forward(self, v, t):
-        # loss function
         self.v = v
         self.t = t
 
-        return (-(t * np.log(sigmoid(v)) + (1 - t) * np.log(1 - sigmoid(v))))
+        return -(t * np.log(sigmoid(self.v)) + (1 - t) * np.log(1 - sigmoid(self.v)))
 
     def backward(self):
-        # dloss
-        # d((t1-v1)^2 + (t2-v2)^2 +(t3-v3)^2 + ...)/dvi = d/dvi (ti^2 - 2tivi + vi^2) = 2(vi-ti)
-
-        return self.t * (sigmoid(self.v) - 1) + (1 - self.t) * sigmoid(self.v)
+        return self.v - self.t

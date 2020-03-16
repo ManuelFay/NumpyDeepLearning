@@ -2,7 +2,7 @@
 
 Deep Learning Framework built entirely using numpy. The framework is built with the PyTorch design in mind and is 
 meant to be used almost exactly like one would with with PyTorch. Implemented for the moment are fully connected
- layers, Tanh() and ReLU() activation layers, MSE loss and mini-batch Stochastic Gradient Descent 
+ layers, Tanh(), Sigmoid() and ReLU() activation layers, MSE and BCE loss and mini-batch Stochastic Gradient Descent 
  (Gradient Descent and Stochastic Gradient Descent are available upon choice of mini-batch size).
  
 ## Installation
@@ -31,6 +31,6 @@ linear model to classify them. The framework however extends to any other usage 
 
 ## Next improvements
 
-Command line functions, variable typing, working BCE implementation, optimizers and batch 
+Command line functions, variable typing, optimizers and batch 
 processing to improve speed.
 

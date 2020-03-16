@@ -73,4 +73,3 @@ class ReLU(Module):
         """param should  return  a  list  of  pairs,  each  composed  of  a  parameter  tensor,  and  a  gradient
         tensor of same size.  This list should be empty for parameter less modules (e.g.  ReLU)"""
         return []
-

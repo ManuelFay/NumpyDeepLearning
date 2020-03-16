@@ -14,8 +14,8 @@ class Sequencer(Module):
             x = func(x)
         return x
 
-    def backward(self, lossBack):
-        x = lossBack
+    def backward(self, grad):
+        x = grad
         for func in self.seq[::-1]:
             x = func.backward(x)
 

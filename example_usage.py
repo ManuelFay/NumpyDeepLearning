@@ -56,8 +56,8 @@ def main():
     inputs, targets = generate_disc_set(1000)
     split = 0.8
 
-    accuracy, output = compute_nb_errors(model=nn.DemandedNet(),
-                                         criterion=nn.MSELoss(),
+    accuracy, output = compute_nb_errors(model=nn.SimpleNet(),
+                                         criterion=nn.BCEwithSoftmaxLoss(),
                                          train_input=inputs[:int(split * len(inputs)), :],
                                          train_target=targets[:int(split * len(inputs))],
                                          test_input=inputs[int(split * len(inputs)):, :],
