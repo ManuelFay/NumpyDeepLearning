@@ -1,3 +1,5 @@
+from typing import List
+import numpy as np
 from .module import Module
 
 
@@ -8,13 +10,13 @@ class Sequencer(Module):
     def add(self, inseq):
         self.seq = inseq
 
-    def forward(self, x):
+    def forward(self, x: np.array) -> np.array:
 
         for func in self.seq:
             x = func(x)
         return x
 
-    def backward(self, grad):
+    def backward(self, grad: np.array):
         x = grad
         for func in self.seq[::-1]:
             x = func.backward(x)
@@ -26,7 +28,7 @@ class Sequencer(Module):
                 params.append(param)
         return params
 
-    def param_func(self):
+    def param_func(self) -> List[List[np.array]]:
         params = []
         for func in self.seq:
             if len(func.param()) > 0:

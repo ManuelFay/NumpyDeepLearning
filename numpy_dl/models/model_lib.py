@@ -1,3 +1,4 @@
+import numpy as np
 import numpy_dl as nn
 
 
@@ -10,7 +11,7 @@ class SimpleNet(nn.Sequencer):
 
         self.relu1 = nn.ReLU()
 
-    def forward(self, x):
+    def forward(self, x: np.array) -> np.array:
         self.seq = [self.fc1, self.relu1, self.fc5]
 
         for func in self.seq:
@@ -31,7 +32,7 @@ class DemandedNet(nn.Sequencer):
         self.relu2 = nn.ReLU()
         self.relu3 = nn.ReLU()
 
-    def forward(self, x):
+    def forward(self, x: np.array) -> np.array:
         self.seq = [self.fc1, self.relu1, self.fc2, self.fc3, self.fc5, self.tan1]
         for func in self.seq:
             x = func(x)

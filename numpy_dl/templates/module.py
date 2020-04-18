@@ -3,7 +3,7 @@ class Module:
     def __call__(self, *arg):
         return self.forward(*arg)
 
-    def forward(self, x):
+    def forward(self, *arg):
         """forward should get for input, and returns, a tensor or a tuple of tensors."""
         raise NotImplementedError
 

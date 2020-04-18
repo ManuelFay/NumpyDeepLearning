@@ -29,8 +29,24 @@ Run the example code.
 The example_usage.py is a usage example that generates synthetic binary data and then implements a multi-layer 
 linear model to classify them. The framework however extends to any other usage and dataset.
 
+## Use as package
+
+Install the package from the root directory with:
+
+```python
+pip install -e .
+```
+
+You can then import it with :
+
+```python
+import numpy_dl
+```
+
+Usage examples are provided in the afore mentioned example_usage.py .
+
 ## Next improvements
 
-Command line functions, variable typing, optimizers and batch 
+Command line functions, optimizers and multi-threading/batch 
 processing to improve speed.
 

@@ -1,3 +1,4 @@
+from typing import List
 import numpy as np
 from numpy_dl.templates import Module
 
@@ -16,12 +17,12 @@ class Linear(Module):
         self.w_grad = np.zeros((size_input, size_output))
         self.b_grad = np.zeros((size_output, 1))
 
-    def forward(self, x):
+    def forward(self, x: np.array) -> np.array:
         """forward should get for input, and returns, a tensor or a tuple of tensors."""
         self.input = x
         return np.matmul(x.reshape(1, -1), self.weights).reshape(-1, 1) + self.bias
 
-    def backward(self, grad):
+    def backward(self, grad: np.array) -> np.array:
         """backward should get as input a tensor or a tuple of tensors containing the gradient of the loss with respect
         to the module’s output, accumulate the gradient wrt the parameters, and return a tensor or a tuple of tensors
         containing the gradient of the loss wrt the module’s input."""
@@ -39,7 +40,7 @@ class Linear(Module):
         self.weights = self.weights - eta * self.w_grad
         self.bias = self.bias - eta * self.b_grad
 
-    def param(self):
+    def param(self) -> List[List[np.array]]:
         """param should  return  a  list  of  pairs,  each  composed  of  a  parameter  tensor,  and  a  gradient
         tensor of same size.  This list should be empty for parameter less modules (e.g.  ReLU)"""
         return [[self.weights, self.w_grad], [self.bias, self.b_grad]]
