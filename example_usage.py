@@ -15,20 +15,18 @@ def compute_nb_errors(model,
 
     model = nn.train_model(model, criterion, train_input, train_target, mini_batch_size, eta, epochs, print_=print_)
 
-    # Train accuracy # TODO: process by batch
-    output = np.zeros((len(train_input), 1))
-    for i in range(train_input.shape[0]):
-        tmp = model(np.expand_dims(train_input[i], 1)).reshape(1, -1)
-        output[i, :] = tmp
+    # Train accuracy
 
+    output = model(train_input)
+    print(f'input {train_input.shape}')
+    print(f'output {output.shape}')
+
+    # TODO: process by batch
+    output = model(train_input)
     print(f'Train Accuracy: {nn.evaluate_accuracy(train_target, output)}\n')
 
     # Test accuracy
-    output = np.zeros((len(test_input), 1))
-    for i in range(test_input.shape[0]):
-        tmp = model(np.expand_dims(test_input[i], 1)).reshape(1, -1)
-        output[i, :] = tmp
-
+    output = model(test_input)
     accuracy = nn.evaluate_accuracy(test_target, output)
     print(f'Test Accuracy: {accuracy}\n')
     return accuracy, output
@@ -61,7 +59,7 @@ def main():
                                     train_target=targets[:int(split * len(inputs))],
                                     test_input=inputs[int(split * len(inputs)):, :],
                                     test_target=targets[int(split * len(inputs)):],
-                                    mini_batch_size=100,
+                                    mini_batch_size=10,
                                     eta=1e-4,
                                     epochs=50)
     print(f'Test Accuracy: {accuracy}')
