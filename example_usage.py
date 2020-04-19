@@ -50,7 +50,7 @@ def generate_disc_set(number_samples):
 
 
 def main():
-    inputs, targets = generate_disc_set(1000)
+    inputs, targets = generate_disc_set(10000)
     split = 0.8
 
     accuracy, _ = compute_nb_errors(model=nn.SimpleNet(),
