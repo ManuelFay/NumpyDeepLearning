@@ -10,10 +10,9 @@ class SimpleNet(nn.Sequencer):
         self.fc5 = nn.Linear(200, 1)
 
         self.relu1 = nn.ReLU()
-
-    def forward(self, x: np.array) -> np.array:
         self.seq = [self.fc1, self.relu1, self.fc5]
 
+    def forward(self, x: np.array) -> np.array:
         for func in self.seq:
             x = func(x)
         return x
@@ -31,9 +30,9 @@ class DemandedNet(nn.Sequencer):
         self.relu1 = nn.ReLU()
         self.relu2 = nn.ReLU()
         self.relu3 = nn.ReLU()
+        self.seq = [self.fc1, self.relu1, self.fc2, self.fc3, self.fc5, self.tan1]
 
     def forward(self, x: np.array) -> np.array:
-        self.seq = [self.fc1, self.relu1, self.fc2, self.fc3, self.fc5, self.tan1]
         for func in self.seq:
             x = func(x)
         return x

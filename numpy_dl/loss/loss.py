@@ -7,6 +7,7 @@ from numpy_dl.templates import sigmoid
 class MSELoss(Module):
 
     def __init__(self):
+        super().__init__()
         self.target = None
         self.value = None
 
@@ -22,8 +23,7 @@ class MSELoss(Module):
 
         if reduction == 'mean':
             return mse.mean()
-        else:
-            return mse.sum()
+        return mse.sum()
 
     def backward(self) -> np.array:
         return 2 * (self.value - self.target)
@@ -32,6 +32,7 @@ class MSELoss(Module):
 class BCEwithSoftmaxLoss(Module):
 
     def __init__(self):
+        super().__init__()
         self.target = None
         self.value = None
 
@@ -47,8 +48,7 @@ class BCEwithSoftmaxLoss(Module):
 
         if reduction == 'mean':
             return bce.mean()
-        else:
-            return bce.sum()
+        return bce.sum()
 
     def backward(self) -> np.array:
         grad = np.array(self.value - self.target)

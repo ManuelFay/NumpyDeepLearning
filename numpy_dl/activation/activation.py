@@ -7,12 +7,16 @@ from numpy_dl.templates import sigmoid
 class Tanh(Module):
 
     def __init__(self):
+        super().__init__()
         # maybe initialize a tensor to keep in memory the inputs?
         self.input = None
 
     def forward(self, x: np.array) -> np.array:
         """forward should get for input, and returns, a tensor or a tuple of tensors."""
-        self.input = x
+        if self.is_training:
+            self.input = x
+        else:
+            self.input = None
         return np.tanh(x)
 
     def backward(self, grad: np.array) -> np.array:
@@ -31,12 +35,16 @@ class Tanh(Module):
 class Sigmoid(Module):
 
     def __init__(self):
+        super().__init__()
         # maybe initialize a tensor to keep in memory the inputs?
         self.input = None
 
     def forward(self, x: np.array) -> np.array:
         """forward should get for input, and returns, a tensor or a tuple of tensors."""
-        self.input = x
+        if self.is_training:
+            self.input = x
+        else:
+            self.input = None
         return sigmoid(x)
 
     def backward(self, grad: np.array) -> np.array:
@@ -55,12 +63,16 @@ class Sigmoid(Module):
 class ReLU(Module):
 
     def __init__(self):
+        super().__init__()
         # maybe initialize a tensor to keep in memory the inputs?
         self.input = None
 
     def forward(self, x: np.array) -> np.array:
         """forward should get for input, and returns, a tensor or a tuple of tensors."""
-        self.input = x
+        if self.is_training:
+            self.input = x
+        else:
+            self.input = None
         return (x >= 0).astype('float') * x
 
     def backward(self, grad: np.array) -> np.array:

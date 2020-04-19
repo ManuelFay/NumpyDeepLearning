@@ -6,6 +6,7 @@ from numpy_dl.templates import Module
 class Linear(Module):
 
     def __init__(self, size_input, size_output):
+        super().__init__()
         self.size_input = size_input
         self.size_output = size_output
         # eps = 1e-6
@@ -20,7 +21,10 @@ class Linear(Module):
 
     def forward(self, x: np.array) -> np.array:
         """forward should get for input, and returns, a tensor or a tuple of tensors."""
-        self.input = x
+        if self.is_training:
+            self.input = x
+        else:
+            self.input = None
         return np.matmul(x, self.weights) + self.bias
 
     def backward(self, grad: np.array) -> np.array:

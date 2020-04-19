@@ -16,12 +16,11 @@ def compute_nb_errors(model,
     model = nn.train_model(model, criterion, train_input, train_target, mini_batch_size, eta, epochs, print_=print_)
 
     # Train accuracy
-
     output = model(train_input)
     print(f'input {train_input.shape}')
     print(f'output {output.shape}')
 
-    # TODO: process by batch
+    model.eval()
     output = model(train_input)
     print(f'Train Accuracy: {nn.evaluate_accuracy(train_target, output)}\n')
 

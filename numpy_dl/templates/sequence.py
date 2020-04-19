@@ -5,6 +5,7 @@ from .module import Module
 
 class Sequencer(Module):
     def __init__(self):
+        super().__init__()
         self.seq = None
 
     def add(self, inseq):
@@ -42,3 +43,13 @@ class Sequencer(Module):
         if self.seq:
             for func in self.seq:
                 func.zero_grad()
+
+    def eval(self):
+        if self.seq:
+            for func in self.seq:
+                func.is_training = False
+
+    def train(self):
+        if self.seq:
+            for func in self.seq:
+                func.is_training = True
