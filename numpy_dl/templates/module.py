@@ -1,5 +1,8 @@
 class Module:
 
+    def __init__(self):
+        self.is_training = True
+
     def __call__(self, *arg):
         return self.forward(*arg)
 

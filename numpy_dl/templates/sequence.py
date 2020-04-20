@@ -5,12 +5,16 @@ from .module import Module
 
 class Sequencer(Module):
     def __init__(self):
+        super().__init__()
         self.seq = None
 
     def add(self, inseq):
         self.seq = inseq
 
     def forward(self, x: np.array) -> np.array:
+
+        if np.array(x).ndim == 1:
+            x = np.expand_dims(x, 0)
 
         for func in self.seq:
             x = func(x)
@@ -39,3 +43,13 @@ class Sequencer(Module):
         if self.seq:
             for func in self.seq:
                 func.zero_grad()
+
+    def eval(self):
+        if self.seq:
+            for func in self.seq:
+                func.is_training = False
+
+    def train(self):
+        if self.seq:
+            for func in self.seq:
+                func.is_training = True
