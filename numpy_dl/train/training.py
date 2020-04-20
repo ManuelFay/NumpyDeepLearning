@@ -1,6 +1,3 @@
-import numpy as np
-
-
 # TODO: make CLI
 def train_model(model, criterion, train_input, train_target, mini_batch_size, eta, epochs=25, print_=False):
     for epoch in range(0, epochs):

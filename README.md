@@ -47,6 +47,5 @@ Usage examples are provided in the afore mentioned example_usage.py .
 
 ## Next improvements
 
-Command line functions, optimizers and multi-threading/batch 
-processing to improve speed.
+Command line functions, optimizers and multi-threading to improve speed.
 

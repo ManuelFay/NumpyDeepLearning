@@ -1,35 +1,6 @@
 import numpy as np
 import numpy_dl as nn
 
-# pylint: disable=too-many-arguments
-def compute_nb_errors(model,
-                      criterion,
-                      train_input,
-                      train_target,
-                      test_input,
-                      test_target,
-                      mini_batch_size,
-                      eta,
-                      epochs=25,
-                      print_=True):
-
-    model = nn.train_model(model, criterion, train_input, train_target, mini_batch_size, eta, epochs, print_=print_)
-
-    # Train accuracy
-    output = model(train_input)
-    print(f'input {train_input.shape}')
-    print(f'output {output.shape}')
-
-    model.eval()
-    output = model(train_input)
-    print(f'Train Accuracy: {nn.evaluate_accuracy(train_target, output)}\n')
-
-    # Test accuracy
-    output = model(test_input)
-    accuracy = nn.evaluate_accuracy(test_target, output)
-    print(f'Test Accuracy: {accuracy}\n')
-    return accuracy, output
-
 
 # Generate test set
 def generate_disc_set(number_samples):
@@ -49,19 +20,32 @@ def generate_disc_set(number_samples):
 
 
 def main():
-    inputs, targets = generate_disc_set(10000)
+    inputs, targets = generate_disc_set(100000)
     split = 0.8
 
-    accuracy, _ = compute_nb_errors(model=nn.SimpleNet(),
-                                    criterion=nn.BCEwithSoftmaxLoss(),
-                                    train_input=inputs[:int(split * len(inputs)), :],
-                                    train_target=targets[:int(split * len(inputs))],
-                                    test_input=inputs[int(split * len(inputs)):, :],
-                                    test_target=targets[int(split * len(inputs)):],
-                                    mini_batch_size=10,
-                                    eta=1e-4,
-                                    epochs=50)
-    print(f'Test Accuracy: {accuracy}')
+    train_input = inputs[:int(split * len(inputs)), :]
+    train_target = targets[:int(split * len(inputs))]
+    test_input = inputs[int(split * len(inputs)):, :]
+    test_target = targets[int(split * len(inputs)):]
+
+    model = nn.train_model(model=nn.SimpleNet(),
+                           criterion=nn.BCEwithSoftmaxLoss(),
+                           train_input=train_input,
+                           train_target=train_target,
+                           mini_batch_size=10,
+                           eta=1e-4,
+                           epochs=50,
+                           print_=True)
+
+    # Train accuracy
+    model.eval()
+    output = model(train_input)
+    print(f'Train Accuracy: {nn.evaluate_accuracy(train_target, output)}\n')
+
+    # Test accuracy
+    output = model(test_input)
+    accuracy = nn.evaluate_accuracy(test_target, output)
+    print(f'Test Accuracy: {accuracy}\n')
 
 
 if __name__ == "__main__":

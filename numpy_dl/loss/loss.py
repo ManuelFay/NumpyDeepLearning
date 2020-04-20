@@ -1,13 +1,10 @@
-from typing import List
 import numpy as np
-from numpy_dl.templates import Module
 from numpy_dl.templates import sigmoid
 
 
-class MSELoss(Module):
+class MSELoss:
 
     def __init__(self):
-        super().__init__()
         self.target = None
         self.value = None
 
@@ -29,17 +26,16 @@ class MSELoss(Module):
         return 2 * (self.value - self.target)
 
 
-class BCEwithSoftmaxLoss(Module):
+class BCEwithSoftmaxLoss:
 
     def __init__(self):
-        super().__init__()
         self.target = None
         self.value = None
 
     def __call__(self, value: np.array, target: np.array) -> float:
         return self.forward(value, target)
 
-    def forward(self, value: np.array, target: np.array, reduction: str ='sum') -> np.array:
+    def forward(self, value: np.array, target: np.array, reduction: str = 'sum') -> np.array:
         # loss function
 
         self.target = target

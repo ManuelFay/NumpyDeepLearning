@@ -13,6 +13,6 @@ def stable_softmax(X: np.array) -> np.array:
 
 def evaluate_accuracy(x: np.array, y: np.array) -> float:
     if x.shape[1] == 1:
-        return np.mean((y > 0) == (x > 0))
+        return np.mean((y > 0) == (x > 0)).item()
 
-    return (y.squeeze().argmax(dim=1) == x.argmax(dim=1)).mean()
+    return np.mean(y.squeeze().argmax(dim=1) == x.argmax(dim=1)).item()
